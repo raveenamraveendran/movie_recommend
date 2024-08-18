@@ -1,0 +1,34 @@
+
+    <h2>Reviews</h2>
+    <ul>
+        {% for item in movies_with_reviews %}
+        <li>
+            <h3>{{ item.movie.title }}</h3>
+            <p>{{ item.movie.description }}</p>
+
+
+            <ul id="reviews-{{ item.movie.id }}" class="review-list">
+                {% for review in item.reviews %}
+                <li>
+                    <p>Reviewer: {{ review.reviewer_name }}</p>
+                    <p>Rating: {{ review.rating }}</p>
+                    <p>Review: {{ review.review_text }}</p>
+                </li>
+                {% endfor %}
+            </ul>
+        </li>
+        {% endfor %}
+    </ul>
+
+    <script>
+        function toggleReviews(movieId) {
+            var reviews = document.getElementById("reviews-" + movieId);
+            if (reviews.style.display === "none") {
+                reviews.style.display = "block";
+            } else {
+                reviews.style.display = "none";
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,106 @@
+
+{% extends 'base.html' %}
+{% block title %}Home{% endblock title %}
+{% block css %}
+    body {
+        background: -webkit-linear-gradient(left, powderblue, powderblue);
+    }
+
+    .col-md-3 {
+        display: inline-block;
+        margin-left: -4px;
+    }
+
+    .text-light {
+        color: red
+    }
+
+    .carousel-indicators .active {
+        background-color: powderblue;
+    }
+
+    body .carousel-indicator li {
+        background-color: black;
+    }
+
+    body .carousel-indicators {
+        bottom: 0;
+    }
+
+    body .carousel-control-prev-icon,
+    body .carousel-control-next-icon {
+        background-color: black;
+    }
+
+    .carousel-control-prev,
+    .carousel-control-next {
+        top: auto;
+        bottom: auto;
+        padding-top: 222px;
+    }
+
+    body .no-padding {
+        padding-left: 0,
+        padding-right: 0;
+    }
+
+    .wrapper {
+        margin-bottom: 200px;
+    }
+{% endblock %}
+
+<!-- Inside the loop for displaying movies -->
+<form action="{% url 'submit_rating' %}" method="post" class="range-field">
+    {% csrf_token %}
+    <input type="hidden" name="movieid" value="{{ movie.id }}">
+    <input type="hidden" name="userid" value="{{ user.id }}">
+    {{ form.as_p }}
+
+    <!-- Rating stars -->
+    <div class="rating">
+        <input type="radio" id="star5" name="rating" value="5">
+        <label for="star5"><i class="fa-solid fa-star"></i></i></label>
+
+        <input type="radio" id="star4" name="rating" value="4">
+        <label for="star4"><i class="fa-solid fa-star"></i></label>
+
+        <input type="radio" id="star3" name="rating" value="3">
+        <label for="star3"><i class="fas fa-star"></i></label>
+
+        <input type="radio" id="star2" name="rating" value="2">
+        <label for="star2"><i class="fa-solid fa-star"></i></label>
+
+        <input type="radio" id="star1" name="rating" value="1">
+        <label for="star1"><i class="fa-solid fa-star"></i></label>
+    </div>
+
+    <input type="submit" class="btn btn-primary" value="Submit">
+</form>
+
+<!--/* Add this CSS to your existing styles or create a new CSS file */-->
+<!--.rating input[type="radio"] {-->
+<!--    display: none;-->
+<!--}-->
+
+<!--.rating label {-->
+<!--    cursor: pointer;-->
+<!--    color: #ddd;-->
+<!--    font-size: 24px;-->
+<!--}-->
+
+<!--.rating input[type="radio"]:checked ~ label {-->
+<!--    color: #ffc107; /* Yellow color for checked stars */-->
+<!--}-->
+
+<!--&lt;!&ndash; Include FontAwesome in your HTML template &ndash;&gt;-->
+<!--<head>-->
+<!--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">-->
+<!--</head>-->
+<!--&lt;!&ndash; Inside the loop for displaying movies &ndash;&gt;-->
+<!--<form action="{% url 'submit_rating' %}" method="post" class="range-field">-->
+<!--    {% csrf_token %}-->
+<!--    <input type="hidden" name="movieid" value="{{ movie.id }}">-->
+<!--    <input type="hidden" name="userid" value="{{ user.id }}">-->
+<!--    {{ form.as_p }}-->
+<!--    <input type="submit" class="btn btn-primary" value="Submit">-->
+<!--</form>-->

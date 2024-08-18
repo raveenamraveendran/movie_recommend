@@ -1,0 +1,68 @@
+
+{% extends 'base.html' %}
+{% block title %}Home{% endblock title %}
+{% block css %}
+    body {
+        background: -webkit-linear-gradient(left, powderblue, powderblue);
+    }
+
+    .col-md-3 {
+        display: inline-block;
+        margin-left: -4px;
+    }
+
+    .text-light {
+        color: red
+    }
+
+    .carousel-indicators .active {
+        background-color: powderblue;
+    }
+
+    body .carousel-indicator li {
+        background-color: black;
+    }
+
+    body .carousel-indicators {
+        bottom: 0;
+    }
+
+    body .carousel-control-prev-icon,
+    body .carousel-control-next-icon {
+        background-color: black;
+    }
+
+    .carousel-control-prev,
+    .carousel-control-next {
+        top: auto;
+        bottom: auto;
+        padding-top: 222px;
+    }
+
+    body .no-padding {
+        padding-left: 0,
+        padding-right: 0;
+    }
+
+    .wrapper {
+        margin-bottom: 200px;
+    }
+{% endblock %}
+
+{% block content %}
+    <title>Rate Movie</title>
+
+
+
+    <div class="container">
+
+    <form method="post">
+         <h1>Rate a Movie</h1>
+        <br>
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Submit Rating</button>
+    </form>
+
+</div>
+{% endblock content %}

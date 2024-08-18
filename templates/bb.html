@@ -1,0 +1,84 @@
+
+
+
+{% extends 'base.html' %}
+{% block title %}Search{% endblock title %}
+{% block css %}
+    body {
+        background: -webkit-linear-gradient(left, powderblue, powderblue);
+    }
+
+    .col-md-3 {
+        display: inline-block;
+        margin-left: -4px;
+    }
+
+    .carousel-indicators .active {
+        background-color: powderblue;
+    }
+
+    .col-md-3 img {
+        width: 170px;
+        height: 200px;
+    }
+
+    body .carousel-indicators {
+        bottom: 0;
+    }
+
+    .carousel-control-prev,
+    .carousel-control-next {
+        top: auto;
+        bottom: auto;
+        padding-top: 222px;
+    }
+
+    body .no-padding {
+        padding-left: 0;
+        padding-right: 0;
+    }
+
+    .wrapper {
+        margin-bottom: 200px;
+    }
+
+    .my_search_text {
+        padding-top: 20px;
+    }
+{% endblock %}
+
+{% block content %}
+<div class="row">
+    <h1></h1>
+    <div class="container wrapper">
+        <h4 class="my-4 black">{{ genre }} Movies</h4>
+        <br>
+        <br>
+ <div class="row">
+        {% for movie in movies %}
+        <div class="col-4 mb-2">
+            <div class="card" style="width: 18rem">
+                <!-- Print image URL for debugging -->
+                <h5 class="card-title text-center" style="background-color:red">{{ movie.title }}</h5>
+                <img class="card-img-top" src="{{ movie.image.url }}" alt="Card image cap" height="250px" width="200px">
+                <div class="card-body" style="height: 300px;">
+                    <!-- Apply a fixed height to ensure uniform size -->
+                    <p><strong>Genres:</strong> {{ movie.genres }}</p>
+                    <p><strong>Description:</strong> {{ movie.description }}</p>
+                    <p><strong>Actors:</strong> {{ movie.actors }}</p>
+                    <p><strong>Duration:</strong> {{ movie.movieduration }}</p>
+                    <p><strong>Youtube link:</strong> <a href="{{ movie.link }}">{{ movie.link }}</a>
+                        <br>
+                        <br>
+                        <a class="btn btn-secondary" href="{% url 'add_review' movie.id %}">Add Review</a>
+                        <a class="btn btn-secondary" href="{% url 'show_reviews' movie_id=movie.id %}">Show Reviews</a>
+                        </div>
+                    </div>
+                </div>
+            {% empty %}
+                <p>No movies found in this Category.</p>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,86 @@
+
+
+{% extends 'base.html' %}
+{% block title %}Home{% endblock title %}
+{% block css %}
+    body {
+        background: -webkit-linear-gradient(left, powderblue, powderblue);
+    }
+
+    .col-md-3 {
+        display: inline-block;
+        margin-left: -4px;
+    }
+
+    .text-light {
+        color: red
+    }
+
+    .carousel-indicators .active {
+        background-color: powderblue;
+    }
+
+    body .carousel-indicator li {
+        background-color: black;
+    }
+
+    body .carousel-indicators {
+        bottom: 0;
+    }
+
+    body .carousel-control-prev-icon,
+    body .carousel-control-next-icon {
+        background-color: black;
+    }
+
+    .carousel-control-prev,
+    .carousel-control-next {
+        top: auto;
+        bottom: auto;
+        padding-top: 222px;
+    }
+
+    body .no-padding {
+        padding-left: 0,
+        padding-right: 0;
+    }
+
+    .wrapper {
+        margin-bottom: 200px;
+    }
+<br>
+{% endblock %}
+<br>
+{% block content %}
+<br>
+<a href="{% url 'home' %}" class="btn btn-secondary">      <--Back to Home</a> <!-- Display the movie ID here -->
+
+{% if success_message %}
+
+    <div class="alert alert-success" role="alert" style="color: green; font-size: 30px;">
+        {{ success_message }}
+    </div>
+</div>
+{% endif %}
+ <!-- Display the movie ID here -->
+
+
+<div class="container">
+    <h1>Reviews  {{ movie_id }}</h1>
+<ul>
+
+    {% for review in reviews %}
+        <li>
+            <strong>{{ review.name }}</strong>
+            <br>
+            Rating: {{ review.rating }}
+            <br>
+            Review: {{ review.review_text }}
+            <br>
+        </li>
+    {% endfor %}
+</ul>
+</div>
+{% endblock content %}
+
+

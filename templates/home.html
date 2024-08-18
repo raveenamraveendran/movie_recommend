@@ -1,0 +1,112 @@
+{% extends 'base.html' %}
+{% block title %}Home{% endblock title %}
+{% block css %}
+    body {
+        background: -webkit-linear-gradient(left, powderblue, powderblue);
+    }
+
+    .col-md-3 {
+        display: inline-block;
+        margin-left: -4px;
+    }
+
+    .text-light {
+        color: red
+    }
+
+    .carousel-indicators .active {
+        background-color: powderblue;
+    }
+
+    body .carousel-indicator li {
+        background-color: black;
+    }
+
+    body .carousel-indicators {
+        bottom: 0;
+    }
+
+    body .carousel-control-prev-icon,
+    body .carousel-control-next-icon {
+        background-color: black;
+    }
+
+    .carousel-control-prev,
+    .carousel-control-next {
+        top: auto;
+        bottom: auto;
+        padding-top: 222px;
+    }
+
+    body .no-padding {
+        padding-left: 0,
+        padding-right: 0;
+    }
+
+    .wrapper {
+        margin-bottom: 200px;
+    }
+{% endblock %}
+
+{% block content %}
+<div class="container wrapper">
+    {% if messages %}
+    <!-- Display success message if any -->
+    {% for msg in messages %}
+    {% if msg %}
+    <div>
+        <h4 style="color:green">{{ msg }}</h4>
+    </div>
+    {% endif %}
+    {% endfor %}
+    {% endif %}
+
+    <h5 class="my-4 black">All Movies</h5>
+    <br>
+    <br>
+    <div class="row">
+        {% for movie in allMovies %}
+        <div class="col-4 mb-2">
+            <div class="card" style="width: 18rem">
+                <!-- Print image URL for debugging -->
+                <h5 class="card-title text-center" style="background-color:red">{{ movie.title }}</h5>
+                <img class="card-img-top" src="{{ movie.image.url }}" alt="Card image cap" height="250px" width="200px">
+                <div class="card-body" style="height: 300px;">
+                    <!-- Apply a fixed height to ensure uniform size -->
+                    <p><strong>Genres:</strong> {{ movie.genres }}</p>
+                    <p><strong>Description:</strong> {{ movie.description }}</p>
+                    <p><strong>Actors:</strong> {{ movie.actors }}</p>
+                    <p><strong>Duration:</strong> {{ movie.movieduration }}</p>
+                    <p><strong>Youtube link:</strong> <a href="{{ movie.link }}">{{ movie.link }}</a>
+                        <br>
+                        <br>
+                        <a class="btn btn-secondary" href="{% url 'add_review' movie.id %}">Add Review</a>
+                        <a class="btn btn-secondary" href="{% url 'show_reviews' movie_id=movie.id %}">Show Reviews</a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    {% endblock %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

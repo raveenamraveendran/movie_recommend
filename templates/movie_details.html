@@ -1,0 +1,16 @@
+<!-- movie_details1.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Movie Details</title>
+</head>
+<body>
+    <h1>{{ movie.title }}</h1>
+    <p>Release Year: {{ movie.year }}</p>
+    <p>Director: {{ movie.director }}</p>
+    <p>Description: {{ movie.description }}</p>
+    <a href="{% url 'edit_movie' movie.id %}">Edit Details</a>
+    <a href="{% url 'home' %}">Back to Home</a>
+</body>
+</html>

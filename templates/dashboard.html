@@ -1,0 +1,112 @@
+
+{% extends 'base.html' %}
+{% block title %}Home{% endblock title %}
+{% block css %}
+    body {
+        background: -webkit-linear-gradient(left, powderblue, powderblue);
+    }
+
+    .col-md-3 {
+        display: inline-block;
+        margin-left: -4px;
+    }
+
+    .text-light {
+        color: red
+    }
+
+    .carousel-indicators .active {
+        background-color: powderblue;
+    }
+
+    body .carousel-indicator li {
+        background-color: black;
+    }
+
+    body .carousel-indicators {
+        bottom: 0;
+    }
+
+    body .carousel-control-prev-icon,
+    body .carousel-control-next-icon {
+        background-color: black;
+    }
+
+    .carousel-control-prev,
+    .carousel-control-next {
+        top: auto;
+        bottom: auto;
+        padding-top: 222px;
+    }
+
+    body .no-padding {
+        padding-left: 0,
+        padding-right: 0;
+    }
+
+    .wrapper {
+        margin-bottom: 200px;
+    }
+{% endblock %}
+
+{% block content %}
+<div class="container wrapper">
+    {% if messages %}
+        <!-- Display success message if any -->
+        {% for msg in messages %}
+            {% if msg %}
+                <div>
+                    <h4 style="color:green">{{ msg }}</h4>
+                </div>
+            {% endif %}
+        {% endfor %}
+    {% endif %}
+
+    <!-- Loop through movies categorized by genres -->
+    {% for genre, movies in allMovies.items %}
+        <h5 class="my-4 text-black"><u>{{ genre }}</u></h5>
+        <div class="row">
+            {% for movie in movies %}
+                <div class="col-4 md-2">
+                    <div class="card" style="width: 18rem;">
+                         <h5 class="card-title text-center" style="background-color:red">{{ movie.title }}</h5>
+                        <img class="card-img-top" src="{{ movie.image.url }}" alt="{{ movie.title }}" alt="Card image cap" height="250px" width="200px">
+                        <div class="card-body">
+
+                            <form action="{% url 'rate_movie' %}" method="post">
+
+                                {% csrf_token %}
+                                <input type="hidden" name="movie_id" value="{{ movie.id }}">
+                                <!-- Star rating input -->
+                                <div class="rating">
+
+
+
+
+
+
+
+
+
+
+
+                      <br>
+
+                        <div class="card-footer">
+                    <p><strong>Genres:</strong> {{ movie.genres }}</p>
+                    <p><strong>Description:</strong> {{ movie.description }}</p>
+                    <p><strong>Actors:</strong> {{ movie.actors }}</p>
+                    <p><strong>Duration:</strong> {{ movie.movieduration }}</p>
+                    <p><strong>Youtube link:</strong> <a href="{{ movie.link }}">{{ movie.link }}</a>
+                        </div>
+                    </div>
+</form>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% endfor %}
+</div>
+{% endblock %}
+

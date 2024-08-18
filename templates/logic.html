@@ -1,0 +1,334 @@
+{% extends 'base.html' %}
+{% block title %}Home{% endblock title %}
+{% block css %}
+            body{
+                background: -webkit-linear-gradient(left, #3931af, #00c6ff);
+            }
+          .col-md-3
+          {
+          display: inline-block;
+          margin-left:-4px;
+          }
+
+          .carousel-indicators .active {
+          background-color: blue;
+            }
+
+          .col-md-3 img{
+
+          width: 170px;
+          height: 200px;
+          }
+
+          body .carousel-indicator li{
+          background-color: blue;
+          }
+
+          body .carousel-indicators{
+          bottom: 0;
+          }
+
+          body .carousel-control-prev-icon,
+          body .carousel-control-next-icon{
+          background-color: blue;
+          }
+
+          .carousel-control-prev,
+          .carousel-control-next{
+          top: auto;
+          bottom: auto;
+          padding-top: 222px;
+          }
+        body .no-padding{
+           padding-left: 0,
+           padding-right: 0;
+           }
+
+        .wrapper{
+
+        margin-bottom:200px;
+        }
+
+
+ {% endblock %}
+
+{% block content %}
+<div class="container wrapper">
+{% if  recommended%}
+<h5 class="my-4 text-light">Recommended Movie For You</u></h5>
+<div class="row">
+{% for item in recommended %}
+<div class="col-4 mb-2">
+        <div class="card" style="width: 18rem">
+                <img class="card-img-top" src="{{item.image}}"  alt="Card image cap" height="250px" width="200px">           
+                <div class="card-footer">
+                <small class="text-muted">{{item.genres}}</small>
+                <small class="text-muted">{{item.movieduration}}</small>
+                </div>
+        </div>
+</div>
+{% endfor %}
+</div>
+{% else %}
+<h5 class="my-4 text-light">No Recommended Movie Found</u></h5>
+{% endif %}
+
+
+
+
+<br><br>
+    <!--Slideshow starts here -->
+    {% for movie, range, nSlides in allMovies %}
+
+    <h5 class="my-4 text-light">Filtered By:{{movie.0.genres}}</h5>
+<div class="row">
+    <div id="demo{{forloop.counter}}" class="col carousel slide my-3" data-ride="carousel">
+    <ul class="carousel-indicators">
+      <li data-target="#demo{{forloop.counter}}" data-slide-to="0" class="active"></li>
+
+       {% for i in range %}
+      <li data-target="#demo{{forloop.parentloop.counter}}" data-slide-to="{{i}}" ></li>
+      {% endfor %}
+    </ul>
+
+
+    <div class="container carousel-inner no-padding">
+
+      <div class="carousel-item active">
+        <div class="col-xs-3 col-sm-3 col-md-3">
+
+
+          <div class="card" style="width: 18rem">
+             <img class="card-img-top" src="{{movie.0.image.url}}"  alt="Card image cap" height="250px" width="200px">    
+                      <div class="card-body">
+                        <h5 class="card-title">{{movie.0.title}}</h5>
+                      </div>       
+                      <div class="card-footer">
+                        <small class="text-muted">{{movie.0.genres}}</small>
+                        <small class="text-muted">{{movie.0.movieduration}}</small>
+                     </div>
+          </div>
+       </div>
+
+
+        {% for i in movie|slice:"1:" %}
+        <div class="col-xs-3 col-sm-3 col-md-3">
+         <div class="card" style="width: 18rem">
+             <img class="card-img-top" src="{{i.image.url}}"  alt="Card image cap" height="250px" width="200px">    
+                      <div class="card-body">
+                        <h5 class="card-title">{{i.title}}</h5>
+                      </div>       
+                      <div class="card-footer">
+                        <small class="text-muted">{{i.genres}}</small>
+                        <small class="text-muted">{{i.movieduration}}</small>
+                     </div>
+          </div>
+        </div>
+        {% if forloop.counter|divisibleby:4 and forloop.counter > 0 and not forloop.last %}
+      </div><div class="carousel-item">
+        {% endif %}
+
+        {% endfor %}
+    </div>
+
+
+
+</div>
+</div>
+    <!-- left and right controls for the slide -->
+    <a class="carousel-control-prev" href="#demo{{forloop.counter}}" data-slide="prev">
+        <span class="carousel-control-prev-icon"></span>
+    </a>
+    <a class="carousel-control-next" href="#demo{{forloop.counter}}" data-slide="next">
+        <span class="carousel-control-next-icon"></span>
+    </a>
+        </div>
+    {% endfor %}
+</div>
+ {% endblock %}
+
+
+from django.shortcuts import render, redirect
+from django.contrib import messages
+from .forms import RatingForm
+
+def rate_movie(request):
+    if request.method == 'POST':
+        form = RatingForm(request.POST)
+        if form.is_valid():
+            # Process the rating (save to database, etc.)
+            messages.success(request, 'You successfully rated the Movie!')
+            return redirect('rate_movie_success')
+    else:
+        form = RatingForm()
+    return render(request, 'rate_movie.html', {'form': form})
+
+def rate_movie_success(request):
+    return render(request, 'rate_movie_success.html')
+
+
+
+
+
+
+
+{% extends 'base.html' %}
+{% block title %}Profile{% endblock title %}
+{% block css %}
+body{
+    background: -webkit-linear-gradient(left, powderblue ,powderblue );
+}
+.emp-profile{
+    padding: 3%;
+    margin-top: 3%;
+    margin-bottom: 3%;
+    border-radius: 0.5rem;
+    background: #fff;
+}
+.profile-img{
+    text-align: center;
+}
+.profile-img img{
+    width: 70%;
+    height: 100%;
+}
+.profile-img .file {
+    position: relative;
+    overflow: hidden;
+    margin-top: -20%;
+    width: 70%;
+    border: none;
+    border-radius: 0;
+    font-size: 15px;
+    background: #212529b8;
+}
+.profile-img .file input {
+    position: absolute;
+    opacity: 0;
+    right: 0;
+    top: 0;
+}
+.profile-head h5{
+    color: #333;
+}
+.profile-head h6{
+    color: #0062cc;
+}
+.profile-edit-btn{
+    border: none;
+    border-radius: 1.5rem;
+    width: 70%;
+    padding: 2%;
+    font-weight: 600;
+    color: #6c757d;
+    cursor: pointer;
+}
+.proile-rating{
+    font-size: 12px;
+    color: #818182;
+    margin-top: 5%;
+}
+.proile-rating span{
+    color: #495057;
+    font-size: 15px;
+    font-weight: 600;
+}
+.profile-head .nav-tabs{
+    margin-bottom:5%;
+}
+.profile-head .nav-tabs .nav-link{
+    font-weight:600;
+    border: none;
+}
+.profile-head .nav-tabs .nav-link.active{
+    border: none;
+    border-bottom:2px solid #0062cc;
+}
+.profile-work{
+    padding: 14%;
+    margin-top: -15%;
+}
+.profile-work p{
+    font-size: 12px;
+    color: #818182;
+    font-weight: 600;
+    margin-top: 10%;
+}
+.profile-work a{
+    text-decoration: none;
+    color: #495057;
+    font-weight: 600;
+    font-size: 14px;
+}
+.profile-work ul{
+    list-style: none;
+}
+.profile-tab label{
+    font-weight: 600;
+}
+.profile-tab p{
+    font-weight: 600;
+    color: #0062cc;
+}
+{% endblock css %}
+{% block content %}
+<div class="container emp-profile">
+            <form method="post">
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="profile-img">
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-8">
+                        <div class="tab-content profile-tab" id="myTabContent">
+                            <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label></label>
+                                            </div>
+                                            <div class="col-md-6">
+
+                                            </div>
+                                        </div>
+
+                                <h1 style="">PROFILE</h1>
+                                <br>
+                                <div class="container">
+                                            <div class="col-md-6">
+                                                <p><b>User Id</b>   :   {{request.user.id}}</p>
+                                                <p><b>First Name</b>    :   {{request.user.first_name}}</p>
+                                                <p><b>Last Name</b>     :   {{request.user.last_name}}</p>
+                                                <p><b>Email Address</b>     :   {{request.user.email}}</p>
+                                                {% if request.user.is_staff %}
+                                                <p><b>Possession</b>    :   Admin</p>
+                                                {% else %}
+                                                 <p><b>Possession</b>   :   User</p>
+                                                {% endif %}
+                                              <form action="" method="post">
+                                                     {% csrf_token %}
+                        <a  class="btn btn-secondary" href="{% url 'dashboard' %}" > Edit Movie </a>
+
+                    </form>
+
+                            <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label>Total Watched Movie</label>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <p>{{totalwatchedmovie}}</p>
+                                            </div>
+                                        </div>
+
+                            </div>
+                                            </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+            </form>
+</div>
+{% endblock content %}
